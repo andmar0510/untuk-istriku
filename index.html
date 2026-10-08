@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untukmu, Istriku ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Georgia', "Times New Roman", serif;
+    background: #080811;
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    font-family: inherit;
+    outline: none;
+}
+
+.screen {
+    min-height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px 80px 20px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.screen.active {
+    display: flex;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.container {
+    width: 100%;
+    max-width: 680px;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: clamp(34px, 8vw, 64px);
+    margin-bottom: 20px;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: clamp(26px, 6vw, 42px);
+    margin-bottom: 20px;
+    font-weight: normal;
+    line-height: 1.3;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.subtitle {
+    opacity: .85;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.gold {
+    color: #f5d48a;
+}
+
+.rose {
+    color: #ff9fb4;
+}
+
+.btn {
+    border: none;
+    padding: 14px 32px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #b84d68, #e77b96);
+    box-shadow: 0 8px 30px rgba(231,123,150,.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin: 15px 6px 5px 6px;
+    display: inline-block;
+}
+
+.btn:hover, .btn:active {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 35px rgba(231,123,150,.5);
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 35px 25px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.cover {
+    background:
+        radial-gradient(circle at 50% 30%, rgba(255,120,150,.18), transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(130,100,255,.12), transparent 40%),
+        #080811;
+}
+
+.moon {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #fff5d6;
+    box-shadow: 0 0 50px rgba(255, 245, 214, 0.4);
+    margin: 0 auto 30px;
+    animation: float 4s ease-in-out infinite;
+}
+
+.heart {
+    position: fixed;
+    top: -50px;
+    font-size: 20px;
+    animation: fall linear forwards;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.stars {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 2s infinite alternate;
+}
+
+.typing-container {
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.poem-line {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: showLine 0.8s forwards;
+    margin: 12px 0;
+}
+
+.poem-line:nth-child(1) { animation-delay: 0.2s; }
+.poem-line:nth-child(2) { animation-delay: 0.9s; }
+.poem-line:nth-child(3) { animation-delay: 1.6s; }
+.poem-line:nth-child(4) { animation-delay: 2.3s; }
+.poem-line:nth-child(5) { animation-delay: 3.0s; }
+.poem-line:nth-child(6) { animation-delay: 3.7s; }
+.poem-line:nth-child(7) { animation-delay: 4.4s; }
+.poem-line:nth-child(8) { animation-delay: 5.1s; }
+
+.love-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 25px 0;
+}
+
+.love-card {
+    min-height: 120px;
+    border-radius: 18px;
+    padding: 20px 15px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.love-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 120, 150, 0.15);
+    border-color: rgba(255, 159, 180, 0.4);
+}
+
+.love-card .inside {
+    display: none;
+    line-height: 1.6;
+    font-size: 15px;
+    color: #fce4ec;
+}
+
+.love-card.open .title {
+    display: none;
+}
+
+.love-card.open .inside {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.timeline {
+    text-align: left;
+    margin-top: 25px;
+}
+
+.timeline-item {
+    padding: 20px 20px 20px 25px;
+    margin-bottom: 16px;
+    border-left: 3px solid #e77b96;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 0 16px 16px 0;
+}
+
+.timeline-item h3 {
+    color: #f5d48a;
+    margin-bottom: 8px;
+    font-size: 19px;
+    font-weight: normal;
+}
+
+.gift {
+    font-size: 100px;
+    cursor: pointer;
+    display: inline-block;
+    animation: pulse 1.8s infinite;
+    user-select: none;
+    transition: transform 0.2s;
+}
+
+.gift:hover {
+    transform: scale(1.15);
+}
+
+.secret {
+    display: none;
+    margin-top: 25px;
+}
+
+.secret.show {
+    display: block;
+    animation: fadeIn 0.8s ease;
+}
+
+.letter {
+    text-align: left;
+    background: #fbf4ea;
+    color: #3e2723;
+    padding: 30px 25px;
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    line-height: 1.9;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.letter:before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px dashed rgba(141, 110, 99, 0.4);
+    pointer-events: none;
+}
+
+.letter h3 {
+    text-align: center;
+    margin-bottom: 18px;
+    font-size: 24px;
+    color: #5d4037;
+}
+
+.question {
+    font-size: clamp(22px, 5vw, 38px);
+    line-height: 1.5;
+    margin: 25px 0;
+}
+
+.forever {
+    font-size: clamp(26px, 7vw, 55px);
+    color: #ff9fb4;
+    margin: 20px 0;
+    animation: pulse 2s infinite;
+}
+
+.signature {
+    margin-top: 25px;
+    font-style: italic;
+    text-align: right;
+    font-weight: bold;
+}
+
+.progress {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    z-index: 50;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #b84d68, #ff9fb4);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+}
+
+.music {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.music button {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.music button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Custom Notification Toast */
+.toast {
+    position: fixed;
+    top: 75px;
+    right: 20px;
+    background: rgba(20, 20, 35, 0.9);
+    border: 1px solid rgba(255, 159, 180, 0.4);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes showLine {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes twinkle {
+    from { opacity: 0.2; }
+    to { opacity: 1; }
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@media(max-width: 600px) {
+    .love-grid {
+        grid-template-columns: 1fr;
+    }
+    .card {
+        padding: 25px 18px;
+    }
+    p {
+        font-size: 16px;
+    }
+    .letter {
+        padding: 22px 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIK CONTROL -->
+<div class="music">
+    <button onclick="toggleMusic()" id="musicBtn" aria-label="Toggle Audio">🔇</button>
+</div>
+
+<div id="toast" class="toast">Musik latar dinyalakan 🎵</div>
+
+<!-- BACKGROUND STARS -->
+<div class="stars" id="stars"></div>
+
+<!-- 1. COVER -->
+<section class="screen active cover" id="screen1">
+    <div class="container">
+
+        <div class="moon"></div>
+
+        <div class="subtitle">Sebuah pesan kecil dari seseorang... </div>
+
+        <h1>
+            Untukmu,<br>
+            <span class="rose">Istriku ❤️</span><br>
+			Bunda Ammar <br>
+        </h1>
+
+        <p class="subtitle">
+            Ada sesuatu yang ingin kusampaikan.<br>
+            Kali ini, biarkan halaman ini yang berbicara.
+        </p>
+
+        <button class="btn" onclick="nextScreen()">
+            Buka Adinda...Ku ❤️
+        </button>
+
+    </div>
+</section>
+
+<!-- 2. PEMBUKAAN -->
+<section class="screen" id="screen2">
+    <div class="container">
+
+        <div class="card">
+
+            <div class="rose" style="font-size:50px; margin-bottom: 10px;">♡</div>
+
+            <h2>Untuk seseorang yang kupilih...</h2>
+
+            <div class="typing-container">
+                <p>
+                    Aku mungkin tidak selalu pandai<br>
+                    mengungkapkan perasaan.
+                </p>
+
+                <p>
+                    Tidak selalu tahu bagaimana mengatakan<br>
+                    betapa bersyukurnya aku memilikimu.
+                </p>
+
+                <p class="gold">
+                    Maka hari ini...<br>
+					05 Oktober 2026
+                </p>
+
+                <p>
+                    biarkan halaman ini yang berbicara.
+                </p>
+            </div>
+
+            <button class="btn" onclick="nextScreen()">
+                Lanjut ❤️
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- 3. PUISI -->
+<section class="screen" id="screen3">
+    <div class="container">
+
+        <div class="card">
+
+            <div class="rose" style="font-size:40px; margin-bottom: 10px;">🌹</div>
+
+            <h2>Untukmu, yang Kupanggil IstriKu</h2>
+
+            <div style="margin: 20px 0;">
+
+                <p class="poem-line">
+                    Aku tidak menjanjikan bahwa setiap hari akan selalu mudah.
+                </p>
+
+                <p class="poem-line">
+                    Tetapi aku ingin menjadi seseorang yang tetap menggenggam tanganmu ketika kamu sedang lelah.
+                </p>
+
+                <p class="poem-line">
+                    Aku tidak memilihmu hanya untuk hari-hari yang indah.
+                </p>
+
+                <p class="poem-line">
+                    Aku memilihmu untuk menjadi teman perjalanan sampai tubuh kita melemah.
+                </p>
+
+                <p class="poem-line">
+                    Dan jika suatu hari nanti langkah kita mulai melambat...
+                </p>
+
+                <p class="poem-line">
+                    semoga aku masih menjadi tempat pertama yang ingin kau cari ketika ingin istirahat.
+                </p>
+
+                <p class="poem-line gold">
+                    Karena dari sekian banyak jalan yang bisa kutempuh...
+                </p>
+
+                <p class="poem-line rose">
+                    jalan bersamamu adalah jalan yang ingin terus kujaga utuh.
+                </p>
+
+            </div>
+
+            <button class="btn" onclick="nextScreen()">
+                Ada lagi ❤️
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- 4. HAL YANG DISYUKURI -->
+<section class="screen" id="screen4">
+    <div class="container">
+
+        <h2>Hal-Hal yang Kusyukuri Darimu</h2>
+
+        <p class="subtitle">
+            Coba buka satu per satu...
+        </p>
+
+        <div class="love-grid">
+
+            <div class="love-card" onclick="openCard(this)">
+                <div class="title">❤️ Senyummu</div>
+                <div class="inside">
+                    Ada hari-hari yang terasa jauh lebih ringan hanya karena melihat senyum manismu.
+                </div>
+            </div>
+
+            <div class="love-card" onclick="openCard(this)">
+                <div class="title">🌷 Kesabaranmu</div>
+                <div class="inside">
+                    Terima kasih sudah bersabar dan selalu menemani segala kekuranganku.
+                </div>
+            </div>
+
+            <div class="love-card" onclick="openCard(this)">
+                <div class="title">🏡 Rumah</div>
+                <div class="inside">
+                    Bersamamu, rumah bukan sekadar tempat. Ia terasa seperti pelukan hangat tempat pulang.
+                </div>
+            </div>
+
+            <div class="love-card" onclick="openCard(this)">
+                <div class="title">🤍 Hatimu</div>
+                <div class="inside">
+                    Ada kelembutan dan ketulusan dalam dirimu yang selalu ingin kujaga selamanya.
+                </div>
+            </div>
+
+            <div class="love-card" onclick="openCard(this)">
+                <div class="title">😊 Tawamu</div>
+                <div class="inside">
+                    Semoga aku selalu punya alasan dan cara untuk membuatmu tersenyum gembira.
+                </div>
+            </div>
+
+            <div class="love-card" onclick="openCard(this)">
+                <div class="title">💍 Pilihanmu</div>
+                <div class="inside">
+                    Terima kasih karena telah memilihku menjadi Imam perjalanan hidupmu.
+                </div>
+            </div>
+
+        </div>
+
+        <button class="btn" onclick="nextScreen()">
+            Lanjut ❤️
+        </button>
+
+    </div>
+</section>
+
+<!-- 5. KISAH KITA -->
+<section class="screen" id="screen5">
+    <div class="container">
+
+        <div class="card">
+
+            <h2>Kisah Kita</h2>
+
+            <p class="subtitle">
+                Beberapa halaman dari cerita yang ingin terus kutulis bersamamu.
+            </p>
+
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <h3>🌱 Awal Kita</h3>
+                    <p>
+                        Dari dua orang yang awalnya hanya saling mengenal secara maya, ternyata Allah mempertemukan kita dalam sebuah cerita yang tidak pernah kubayangkan sebelumnya.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>💍 Hari Pernikahan</h3>
+                    <p>
+                        Hari ketika dua perjalanan berubah menjadi satu. Hari ketika namamu bukan lagi sekadar kata yang kuhafal, tetapi nama yang ada dalam doaku .
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>🏡 Hari-Hari Setelahnya</h3>
+                    <p>
+                        Ternyata kebahagiaan bukan selalu tentang hal besar. Kadang cukup makan bersama, bercanda, dan pulang ke rumah yang ada dirimu.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>❤️ Hari Ini</h3>
+                    <p>
+                        Dan sampai hari ini... aku masih selalu mencintaimu.
+                    </p>
+                </div>
+
+            </div>
+
+            <button class="btn" onclick="nextScreen()">
+                Lanjut ❤️
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- 6. KOTAK RAHASIA -->
+<section class="screen" id="screen6">
+    <div class="container">
+
+        <h2>Kotak Rahasia 🎁</h2>
+
+        <p class="subtitle">
+            Ada satu pesan yang mungkin belum pernah kusampaikan dengan cara seperti ini.
+        </p>
+
+        <div class="gift" onclick="openGift()" id="giftBtn">
+            🎁
+        </div>
+
+        <p style="margin-top:10px;" id="giftSub">
+            Sentuh hadiahnya...
+        </p>
+
+        <div class="secret" id="secret">
+
+            <div class="letter">
+
+                <h3>Untuk Istriku ❤️</h3>
+
+                <p>
+                    Terima kasih telah menjadi bagian paling berharga dari hidupku.
+                </p>
+
+                <p style="margin-top:10px;">
+                    Aku mungkin tidak sempurna dalam mencintaimu. Ada banyak kurangku, banyak salahku, dan banyak yang masih harus kuperbaiki.
+                </p>
+
+                <p style="margin-top:10px;">
+                    Tetapi satu hal yang ingin selalu kuusahakan: menjadi suami yang terus berjuang membuatmu merasa dijaga, dicintai,dan dihargai.
+                </p>
+
+                <p style="margin-top:10px;">
+                    Semoga perjalanan kita bukan hanya sampai dunia saja, tapi semoga Allah mempertemukan kita kembali dalam keadaan yang lebih baik di akhirat.
+                </p>
+
+                <p class="signature">
+                    Aku mencintaimu Adinda Yusrotul Rusda. ❤️<br>
+                    — Suamimu Ayah Ammar
+                </p>
+
+            </div>
+
+            <button class="btn" onclick="nextScreen()">
+                Aku punya satu lagi...
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- 7. JIKA BISA MENGULANG WAKTU -->
+<section class="screen" id="screen7">
+    <div class="container">
+
+        <div class="card">
+
+            <div style="font-size:50px; margin-bottom:10px;">🌌</div>
+
+            <h2>Jika Aku Bisa Mengulang Waktu</h2>
+
+            <p class="question">
+                Jika aku bisa kembali<br>
+                ke hari pertama kita bertemu...
+            </p>
+
+            <p>
+                Apakah aku akan memilihmu lagi?
+            </p>
+
+            <button class="btn" onclick="answerYes()" id="btnYes">
+                IYAAA ❤️
+            </button>
+
+            <div id="answer" style="display:none; margin-top:25px;">
+
+                <div class="forever">
+                    Seribu kali pun...
+                </div>
+
+                <p>
+                    jawabannya tetap sama.
+                </p>
+
+                <br>
+
+                <p>
+                    Aku akan tetap mencarimu.<br>
+                    Tetap memilihmu.<br>
+                    Tetap menggenggam tanganmu.
+                </p>
+
+                <br>
+
+                <p class="gold">
+                    Karena ternyata, dari sekian banyak jalan yang bisa kutempuh...
+                </p>
+
+                <br>
+
+                <p class="rose">
+                    jalan bersamamu adalah jalan yang paling ingin kujaga tetap utuh.
+                </p>
+
+                <button class="btn" onclick="nextScreen()">
+                    Lanjut ❤️
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- 8. JANJI -->
+<section class="screen" id="screen8">
+    <div class="container">
+
+        <div class="card">
+
+            <div style="font-size:50px; margin-bottom:10px;">💍</div>
+
+            <h2>Janji yang Ingin Kujaga</h2>
+
+            <div style="line-height: 2;">
+                <p>Aku tidak ingin berjanji bahwa aku akan selalu sempurna.</p>
+                <p>Tapi aku ingin berjanji bahwa aku akan terus belajar.</p>
+                <p>Belajar menjadi suami yang lebih baik.</p>
+                <p>Belajar mendengarkanmu.</p>
+                <p>Belajar memahamimu. </p>
+                <p>Belajar menahan egoku</p>
+                <p class="gold" style="margin: 10px 0;">Dan belajar mencintaimu dengan cara yang semakin Indah.</p>
+                <p>
+                    Semoga Allah menjaga rumah tangga kita, melimpahkan sakinah, mawaddah, dan rahmah, serta menjadikan perjalanan kita jalan menuju Jannah.
+                </p>
+            </div>
+
+            <button class="btn" onclick="nextScreen()">
+                Satu pertanyaan terakhir...
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- 9. ENDING -->
+<section class="screen cover" id="screen9">
+    <div class="container">
+
+        <div style="font-size:60px; margin-bottom:10px;">❤️</div>
+
+        <h2>Satu Pertanyaan Terakhir</h2>
+
+        <div class="question">
+            Maukah kamu terus<br>
+            berjalan bersamaku?
+        </div>
+
+        <button class="btn" onclick="forever()" id="btnForever">
+            SELAMANYA ❤️
+        </button>
+
+        <div id="ending" style="display:none; margin-top:30px;">
+
+            <div class="forever">
+                SELAMANYA ❤️
+            </div>
+
+            <p>
+                Kalau begitu... mari kita lanjutkan cerita kita.
+            </p>
+
+            <br>
+
+            <p>
+                Bukan sebagai dua orang yang sempurna, tetapi sebagai dua orang yang terus belajar mencintai karena Allah.
+            </p>
+
+            <br>
+
+            <p class="gold">
+                Terima kasih sudah menjadi istriku.
+            </p>
+
+            <br>
+
+            <p class="rose" style="font-size:24px;">
+                Aku mencintaimu. Yusrotul Rusda❤️
+            </p>
+
+            <p class="signature" style="text-align: center; margin-top: 20px;">
+                — Suamimu Tercinta
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- PROGRESS BAR -->
+<div class="progress">
+    <div class="progress-bar" id="progress"></div>
+</div>
+
+<script>
+let current = 1;
+const total = 9;
+
+/* =========================
+   NAVIGASI
+========================= */
+function nextScreen() {
+    if (current < total) {
+        // Matikan screen lama
+        const currentEl = document.getElementById("screen" + current);
+        if (currentEl) currentEl.classList.remove("active");
+
+        current++;
+
+        // Aktifkan screen baru
+        const nextEl = document.getElementById("screen" + current);
+        if (nextEl) nextEl.classList.add("active");
+
+        updateProgress();
+        createHearts(6);
+
+        // Mulai pemutar audio jika ini interaksi pertama
+        if (!musicPlaying && audioCtx && audioCtx.state === 'suspended') {
+            toggleMusic();
+        }
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+}
+
+function updateProgress() {
+    const percent = ((current - 1) / (total - 1)) * 100;
+    document.getElementById("progress").style.width = percent + "%";
+}
+
+/* =========================
+   KARTU CINTA
+========================= */
+function openCard(card) {
+    card.classList.toggle("open");
+    createHearts(3);
+}
+
+/* =========================
+   HADIAH
+========================= */
+function openGift() {
+    const secret = document.getElementById("secret");
+    if (!secret.classList.contains("show")) {
+        secret.classList.add("show");
+        createHearts(25);
+        if (navigator.vibrate) {
+            navigator.vibrate([100, 50, 100]);
+        }
+        document.getElementById("giftBtn").style.transform = "scale(0.9)";
+        document.getElementById("giftSub").style.display = "none";
+    }
+}
+
+/* =========================
+   JAWABAN "YA"
+========================= */
+function answerYes() {
+    const ans = document.getElementById("answer");
+    const btn = document.getElementById("btnYes");
+    if (ans.style.display === "none") {
+        ans.style.display = "block";
+        btn.style.display = "none";
+        createHearts(35);
+        if (navigator.vibrate) {
+            navigator.vibrate(100);
+        }
+    }
+}
+
+/* =========================
+   ENDING
+========================= */
+function forever() {
+    const ending = document.getElementById("ending");
+    const btn = document.getElementById("btnForever");
+    if (ending.style.display === "none") {
+        ending.style.display = "block";
+        btn.style.display = "none";
+        createHearts(70);
+        if (navigator.vibrate) {
+            navigator.vibrate([100, 80, 100, 80, 200]);
+        }
+    }
+}
+
+/* =========================
+   ANIMASI HATI
+========================= */
+function createHearts(number) {
+    const symbols = ["❤️", "💕", "💗", "💖", "💘", "🌹", "✨"];
+
+    for (let i = 0; i < number; i++) {
+        setTimeout(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 95 + "vw";
+            heart.style.fontSize = (16 + Math.random() * 20) + "px";
+            heart.style.animationDuration = (3.5 + Math.random() * 3.5) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }, i * 120);
+    }
+}
+
+/* =========================
+   BINTANG
+========================= */
+function createStars() {
+    const starsContainer = document.getElementById("stars");
+    const count = 90;
+
+    for (let i = 0; i < count; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.style.left = Math.random() * 100 + "%";
+        star.style.top = Math.random() * 100 + "%";
+        star.style.animationDelay = Math.random() * 3 + "s";
+        star.style.opacity = Math.random();
+        starsContainer.appendChild(star);
+    }
+}
+
+/* =========================
+   AUDIO SYNTHESIZER (Tanpa File External)
+========================= */
+let musicPlaying = false;
+let audioCtx = null;
+let timerId = null;
+
+// Melodi Romantis (Frekuensi HZ dan Durasi)
+const melody = [
+    {note: 261.63, duration: 0.6}, // C4
+    {note: 329.63, duration: 0.6}, // E4
+    {note: 392.00, duration: 0.6}, // G4
+    {note: 493.88, duration: 0.8}, // B4
+    {note: 523.25, duration: 1.2}, // C5
+    {note: 440.00, duration: 0.6}, // A4
+    {note: 349.23, duration: 0.6}, // F4
+    {note: 392.00, duration: 1.2}, // G4
+    {note: 329.63, duration: 0.6}, // E4
+    {note: 293.66, duration: 0.6}, // D4
+    {note: 349.23, duration: 0.6}, // F4
+    {note: 329.63, duration: 0.6}, // E4
+    {note: 261.63, duration: 1.2}, // C4
+];
+
+function playNote(freq, duration) {
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        
+        gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration - 0.05);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch(e) {
+        console.error(e);
+    }
+}
+
+function startMelodyLoop() {
+    let noteIndex = 0;
+    function next() {
+        if (!musicPlaying) return;
+        const currentNote = melody[noteIndex];
+        playNote(currentNote.note, currentNote.duration);
+        noteIndex = (noteIndex + 1) % melody.length;
+        timerId = setTimeout(next, currentNote.duration * 1000);
+    }
+    next();
+}
+
+function showToast(text) {
+    const toast = document.getElementById("toast");
+    toast.innerText = text;
+    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2500);
+}
+
+function toggleMusic() {
+    const button = document.getElementById("musicBtn");
+
+    if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+    }
+
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+
+    if (!musicPlaying) {
+        musicPlaying = true;
+        button.innerHTML = "🔊";
+        startMelodyLoop();
+        showToast("Musik latar dinyalakan 🎵");
+    } else {
+        musicPlaying = false;
+        button.innerHTML = "🔇";
+        if (timerId) clearTimeout(timerId);
+        showToast("Musik diheningkan 🔇");
+    }
+}
+
+/* =========================
+   INITIALIZATION
+========================= */
+window.onload = function() {
+    createStars();
+    updateProgress();
+};
+</script>
+
+</body>
+</html>
